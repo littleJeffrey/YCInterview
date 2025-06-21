@@ -4,11 +4,11 @@ using YCInterview.Models;
 
 namespace YCInterview.Controllers
 {
-    public class HomeController : Controller
+    public class TodoController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<TodoController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public TodoController(ILogger<TodoController> logger)
         {
             _logger = logger;
         }
