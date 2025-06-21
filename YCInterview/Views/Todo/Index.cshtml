@@ -1,8 +1,31 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "代辦事項";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@model IEnumerable<YCInterview.Models.TodoItem>
+
+<h2>Todo List</h2>
+<a class="btn btn-primary" asp-action="Create">新增</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>標題</th>
+            <th>完成</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.IsDone</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">編輯</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">刪除</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

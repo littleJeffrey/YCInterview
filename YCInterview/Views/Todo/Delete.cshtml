@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "刪除";
+}
+
+@model YCInterview.Models.TodoItem
+
+<h2>確認刪除</h2>
+
+<div>
+    <h4>確定要刪除這筆項目嗎？</h4>
+    <p>@Model.Title</p>
+</div>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">刪除</button>
+    <a asp-action="Index" class="btn btn-secondary">取消</a>
+</form>
