@@ -4,7 +4,7 @@
 
 @model YCInterview.Models.TodoItem
 
-<h2>編輯任務</h2>
+<h2>編輯事項</h2>
 
 <form asp-action="Edit">
     <input type="hidden" asp-for="Id" />
@@ -14,8 +14,9 @@
         <span asp-validation-for="Title" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="IsDone"></label>
+        <label asp-for="IsDone">完成?</label>
         <input asp-for="IsDone" />
     </div>
     <button type="submit" class="btn btn-primary">更新</button>
+    <a asp-action="Index" class="btn btn-secondary">取消</a>
 </form>

@@ -1,17 +1,18 @@
 ﻿@{
-    ViewData["Title"] = "代辦事項";
+    ViewData["Title"] = "待辦事項";
 }
 
 @model IEnumerable<YCInterview.Models.TodoItem>
 
-<h2>Todo List</h2>
+<h2>待辦事項</h2>
 <a class="btn btn-primary" asp-action="Create">新增</a>
+<a class="btn btn-success float-end" asp-action="ExportExcel">匯出 Excel</a>
 
 <table class="table">
     <thead>
         <tr>
-            <th>標題</th>
-            <th>完成</th>
+            <th>事項名稱</th>
+            <th>事項狀態</th>
             <th></th>
         </tr>
     </thead>
@@ -20,7 +21,7 @@
         {
             <tr>
                 <td>@item.Title</td>
-                <td>@item.IsDone</td>
+                <td>@(item.IsDone ? "完成" : "未完成")</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">編輯</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id">刪除</a>
