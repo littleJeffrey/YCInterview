@@ -13,4 +13,6 @@ public class TodoItem
 
     [Display(Name = "事項狀態")]
     public bool IsDone { get; set; }
+
+    public int UserId { get; set; }
 }

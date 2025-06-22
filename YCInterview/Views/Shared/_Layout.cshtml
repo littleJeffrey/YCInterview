@@ -23,6 +23,15 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Todo" asp-action="Index">Todo</a>
                         </li>
                     </ul>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="d-inline">
+                            <span class="me-2">@User.Identity.Name 您好</span>
+                            <form asp-controller="Acct" asp-action="Logout" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-link p-0 m-0 align-baseline">登出</button>
+                            </form>
+                        </div>
+                    }
                 </div>
             </div>
         </nav>

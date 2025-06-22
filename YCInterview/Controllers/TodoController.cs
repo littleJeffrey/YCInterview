@@ -1,4 +1,5 @@
 using ClosedXML.Excel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
@@ -8,6 +9,7 @@ using YCInterview.Models;
 
 namespace YCInterview.Controllers
 {
+    [Authorize]
     public class TodoController : Controller
     {
         private readonly TodoDbContext _context;
@@ -19,7 +21,13 @@ namespace YCInterview.Controllers
 
         public IActionResult Index()
         {
-            var items = _context.TodoItems.ToList();
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "UserId");
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+            {
+                return Unauthorized();
+            }
+
+            var items = _context.TodoItems.Where(t => t.UserId == userId).ToList();
             return View(items);
         }
         public IActionResult Create()
@@ -33,6 +41,12 @@ namespace YCInterview.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "UserId");
+                if (userIdClaim != null && int.TryParse(userIdClaim.Value, out int userId))
+                {
+                    item.UserId = userId; // ³]©wµ¹ TodoItem
+                }
+
                 _context.Add(item);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -98,7 +112,13 @@ namespace YCInterview.Controllers
 
         public async Task<IActionResult> ExportExcel()
         {
-            var todos = await _context.TodoItems.ToListAsync();
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "UserId");
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+            {
+                return Unauthorized();
+            }
+
+            var todos = await _context.TodoItems.Where(t => t.UserId == userId).ToListAsync();
 
             using var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add("Todo List");
